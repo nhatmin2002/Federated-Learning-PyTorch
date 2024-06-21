@@ -116,6 +116,7 @@ def args_parser():
 if __name__ == "__main__":
     args = args_parser()
     train_df, test_df = load_data(args)
+    print(train_df.shape)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
     train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test,args)
