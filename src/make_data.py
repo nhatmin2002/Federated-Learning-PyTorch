@@ -89,7 +89,7 @@ def mnist_noniid(dataset, num_users):
     idx_shard = [i for i in range(num_shards)]
     dict_users = {i: np.array([]) for i in range(num_users)}
     idxs = np.arange(num_shards*num_imgs)
-    print(len(idxs)
+    print(len(idxs))
     labels = dataset.tensors[1].numpy()
     print(len(labels))
 
@@ -131,7 +131,7 @@ def create_datasets(X_train, y_train, X_test, y_test,args):
     test_dataset = TensorDataset(X_test_tensor, y_test_tensor)
     if args.iid:
             # Sample IID user data from Mnist
-            user_groups = cifar_iid(train_dataset, args.num_users)
+            user_groups = mnist_iid(train_dataset, args.num_users)
     else:
         user_groups = mnist_noniid(train_dataset, args.num_users)
     
