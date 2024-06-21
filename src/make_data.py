@@ -148,7 +148,7 @@ def save_data(train_df, test_df,args):
     train_df.to_csv(f"{args.output_dir}/train.csv", index=False)
     test_df.to_csv(f"{args.output_dir}/test.csv", index=False)
 
-def args_parser():
+def args_parser2():
     parser = argparse.ArgumentParser(description="Load and Save UCI HAR Dataset")
     parser.add_argument("data_dir", type=str, help="Directory containing the UCI HAR Dataset")
     parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
@@ -159,7 +159,7 @@ def args_parser():
     return args
 
 if __name__ == "__main__":
-    args = args_parser()
+    args = args_parser2()
     train_df, test_df = load_data(args)
     print(train_df.shape)
     save_data(train_df, test_df, args)
