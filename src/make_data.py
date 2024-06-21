@@ -89,12 +89,7 @@ def create_datasets(X_train, y_train, X_test, y_test,args):
             # Sample IID user data from Mnist
             user_groups = cifar_iid(train_dataset, args.num_users)
     else:
-        if args.unequal:
-                # Chose uneuqal splits for every user
-                raise NotImplementedError()
-        else:
-                # Chose euqal splits for every user
-                user_groups = cifar_noniid(train_dataset, args.num_users)
+        user_groups = cifar_noniid(train_dataset, args.num_users)
     
     return train_dataset, test_dataset,user_groups
 
