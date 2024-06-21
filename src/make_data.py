@@ -119,7 +119,7 @@ def args_parser():
     return args
 
 if __name__ == "__main__":
-    args = args_parse()
+    args = args_parser()
     train_df, test_df = load_data(args)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
