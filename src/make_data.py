@@ -114,12 +114,12 @@ def args_parser():
     parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
     parser.add_argument("num_users", type=int, help="Num of users")
     parser.add_argument("--iid", action='store_true', help="Whether to use IID (True) or Non-IID (False) data distribution")
+    args = parser.parse_args()
 
-    return parser
+    return args
 
 if __name__ == "__main__":
-    parser = args_parser()
-    args = parser.parse_args()
+    args = args_parse()
     train_df, test_df = load_data(args)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
