@@ -167,8 +167,9 @@ if __name__ == "__main__":
     train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
     print(f"Số lượng mẫu trong train_dataset: {len(train_dataset)}")
     print(train_dataset[0])
-
     print(train_dataset[0])
     print(test_dataset[0])
     print(user_groups[0])
+    trainloader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+
 
