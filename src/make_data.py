@@ -122,5 +122,5 @@ if __name__ == "__main__":
     train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test,args.num_users)
     print(train_dataset[0])
     print(test_dataset[0])
-    print(user_groups[0]
+    print(user_groups[0])
 
