@@ -109,6 +109,8 @@ def args_parser():
     parser = argparse.ArgumentParser(description="Load and Save UCI HAR Dataset")
     parser.add_argument("data_dir", type=str, help="Directory containing the UCI HAR Dataset")
     parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
+    parser.add_argument("num_users", type=int, help="Num of users")
+
     return parser
 
 if __name__ == "__main__":
@@ -118,4 +120,7 @@ if __name__ == "__main__":
     save_data(train_df, test_df, args.output_dir)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
     train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test)
+    print(train_dataset[0])
+    print(test_dataset[0])
+    print(user_groups[0]
 
