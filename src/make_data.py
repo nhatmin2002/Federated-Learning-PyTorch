@@ -169,7 +169,12 @@ if __name__ == "__main__":
     print(train_dataset[0])
     print(train_dataset[0])
     print(test_dataset[0])
-    print(user_groups[0])
+    # print(user_groups[0])
     trainloader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+    for batch_idx, (data, target) in enumerate(trainloader):
+        print(f'Batch {batch_idx + 1}:')
+        print('Data shape:', data.shape)
+        print('Target shape:', target.shape)
+        break
 
 
