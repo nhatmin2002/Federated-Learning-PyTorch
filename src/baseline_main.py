@@ -10,6 +10,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from utils import get_dataset
+from make_data import get_dataset2
 from options import args_parser
 from update import test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
