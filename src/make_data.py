@@ -89,7 +89,9 @@ def mnist_noniid(dataset, num_users):
     idx_shard = [i for i in range(num_shards)]
     dict_users = {i: np.array([]) for i in range(num_users)}
     idxs = np.arange(num_shards*num_imgs)
+    print(len(idxs)
     labels = dataset.tensors[1].numpy()
+    print(len(labels))
 
     # sort labels
     idxs_labels = np.vstack((idxs, labels))
