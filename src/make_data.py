@@ -89,7 +89,7 @@ def create_datasets(X_train, y_train, X_test, y_test,args):
             # Sample IID user data from Mnist
             user_groups = cifar_iid(train_dataset, args.num_users)
     else:
-        user_groups = cifar_noniid(train_dataset, args.num_users)
+        user_groups = mnist_noniid(train_dataset, args.num_users)
     
     return train_dataset, test_dataset,user_groups
 
