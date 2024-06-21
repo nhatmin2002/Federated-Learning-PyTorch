@@ -171,7 +171,12 @@ if __name__ == "__main__":
     print(test_dataset[0])
     # print(user_groups[0])
     trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
-    loader = DataLoader(list(zip(X_train,y_train)), shuffle=False, batch_size=16)
+    X_train_array = X_train.values.astype(np.float32)
+    X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32) 
+    # Convert y_train to numpy array and then to torch tensor
+    y_train_array = y_train.values.astype(np.int64)
+    y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
+    loader = DataLoader(list(zip(X_train_tensor,y_train_tensor)), shuffle=False, batch_size=16)
     for X_batch, y_batch in loader:
         print(X_batch, y_batch)
         print('------------------------------------')
