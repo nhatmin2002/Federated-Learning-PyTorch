@@ -41,6 +41,47 @@ def load_data(data_dir):
     test_df["activity_name"] = label_name_test
 
     return train_df, test_df
+
+
+def preprocess_data(train_df, test_df):
+    # Subtract 1 from 'activity' column in both train and test DataFrames
+    train_df['activity'] -= 1
+    test_df['activity'] -= 1
+
+    # Split data into features (X) and labels (y)
+    y_train = train_df['activity']
+    X_train = train_df.drop(['activity', 'activity_name', 'subject_id'], axis=1)
+    y_test = test_df['activity']
+    X_test = test_df.drop(['activity', 'activity_name', 'subject_id'], axis=1)
+
+    return X_train, y_train, X_test, y_test
+
+
+def create_datasets(X_train, y_train, X_test, y_test):
+    # Convert X_train to numpy array and then to torch tensor
+    X_train_array = X_train.values.astype(np.float32)
+    X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
+    
+    # Convert y_train to numpy array and then to torch tensor
+    y_train_array = y_train.values.astype(np.int64)
+    y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
+    
+    # Create TensorDataset for training data
+    train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
+    
+    # Convert X_test to numpy array and then to torch tensor
+    X_test_array = X_test.values.astype(np.float32)
+    X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
+    
+    # Convert y_test to numpy array and then to torch tensor
+    y_test_array = y_test.values.astype(np.int64)
+    y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
+    
+    # Create TensorDataset for testing data
+    test_dataset = TensorDataset(X_test_tensor, y_test_tensor)
+    
+    return train_dataset, test_dataset
+
   
 def save_data(train_df, test_df, output_dir):
     # Shuffle the dataframes
@@ -62,3 +103,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     train_df, test_df = load_data(args.data_dir)
     save_data(train_df, test_df, args.output_dir)
+    X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
+    train_dataset, test_dataset = create_datasets(X_train, y_train, X_test, y_test)
+
