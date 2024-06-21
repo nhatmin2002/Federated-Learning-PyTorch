@@ -113,6 +113,7 @@ def args_parser():
     parser.add_argument("data_dir", type=str, help="Directory containing the UCI HAR Dataset")
     parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
     parser.add_argument("num_users", type=int, help="Num of users")
+    parser.add_argument("--iid", action='store_true', help="Whether to use IID (True) or Non-IID (False) data distribution")
 
     return parser
 
