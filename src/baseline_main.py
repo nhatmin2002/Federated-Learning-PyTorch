@@ -10,7 +10,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from utils import get_dataset
-from make_data import get_dataset2
+from make_data import *
 from options import args_parser
 from update import test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
@@ -23,7 +23,12 @@ if __name__ == '__main__':
     device = 'cuda' if args.gpu else 'cpu'
 
     # load datasets
-    train_dataset, test_dataset, _ = get_dataset(args)
+    train_df, test_df = load_data(args)
+    print(train_df.shape)
+    save_data(train_df, test_df, args)
+    X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
+    train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
+    # train_dataset, test_dataset, _ = get_dataset(args)
 
     # BUILD MODEL
     if args.model == 'cnn':
