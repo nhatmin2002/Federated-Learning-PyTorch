@@ -8,7 +8,7 @@ from sampling import cifar_iid, cifar_noniid
 def load_data(data_dir):
     # Load feature names
     features = []
-    with open(f"{data_dir}/UCI HAR Dataset/features.txt") as file:
+    with open(f"{args.data_dir}/UCI HAR Dataset/features.txt") as file:
         for line in file:
             features.append(line.split()[1])
     
@@ -28,18 +28,18 @@ def load_data(data_dir):
             features[i] = str(features[i] + str(num))
 
     # Load train data
-    train_df = pd.read_csv(f"{data_dir}/UCI HAR Dataset/train/X_train.txt", delim_whitespace=True, names=features)
-    train_df['subject_id'] = pd.read_csv(f"{data_dir}/UCI HAR Dataset/train/subject_train.txt", header=None).squeeze()
-    train_df["activity"] = pd.read_csv(f"{data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
-    activity = pd.read_csv(f"{data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
+    train_df = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/X_train.txt", delim_whitespace=True, names=features)
+    train_df['subject_id'] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/subject_train.txt", header=None).squeeze()
+    train_df["activity"] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
+    activity = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
     label_name = activity.map({1: "WALKING", 2:"WALKING_UPSTAIRS", 3:"WALKING_DOWNSTAIRS", 4:"SITTING", 5:"STANDING", 6:"LYING"})
     train_df["activity_name"] = label_name
     
     # Load test data
-    test_df = pd.read_csv(f"{data_dir}/UCI HAR Dataset/test/X_test.txt", delim_whitespace=True, names=features)
-    test_df['subject_id'] = pd.read_csv(f"{data_dir}/UCI HAR Dataset/test/subject_test.txt", header=None).squeeze()
-    test_df["activity"] = pd.read_csv(f"{data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
-    activity_test = pd.read_csv(f"{data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
+    test_df = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/X_test.txt", delim_whitespace=True, names=features)
+    test_df['subject_id'] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/subject_test.txt", header=None).squeeze()
+    test_df["activity"] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
+    activity_test = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
     label_name_test = activity_test.map({1: "WALKING", 2:"WALKING_UPSTAIRS", 3:"WALKING_DOWNSTAIRS", 4:"SITTING", 5:"STANDING", 6:"LYING"})
     test_df["activity_name"] = label_name_test
 
@@ -60,7 +60,7 @@ def preprocess_data(train_df, test_df):
     return X_train, y_train, X_test, y_test
 
 
-def create_datasets(X_train, y_train, X_test, y_test):
+def create_datasets(X_train, y_train, X_test, y_test,args):
     # Convert X_train to numpy array and then to torch tensor
     X_train_array = X_train.values.astype(np.float32)
     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
@@ -96,14 +96,14 @@ def create_datasets(X_train, y_train, X_test, y_test):
     return train_dataset, test_dataset,user_groups
 
   
-def save_data(train_df, test_df, output_dir):
+def save_data(train_df, test_df,args):
     # Shuffle the dataframes
     train_df = shuffle(train_df)
     test_df = shuffle(test_df)
     
     # Save to CSV
-    train_df.to_csv(f"{output_dir}/train.csv", index=False)
-    test_df.to_csv(f"{output_dir}/test.csv", index=False)
+    train_df.to_csv(f"{args.output_dir}/train.csv", index=False)
+    test_df.to_csv(f"{args.output_dir}/test.csv", index=False)
 
 def args_parser():
     parser = argparse.ArgumentParser(description="Load and Save UCI HAR Dataset")
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     train_df, test_df = load_data(args.data_dir)
     save_data(train_df, test_df, args.output_dir)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
-    train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test)
+    train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test,args.num_users)
     print(train_dataset[0])
     print(test_dataset[0])
     print(user_groups[0]
