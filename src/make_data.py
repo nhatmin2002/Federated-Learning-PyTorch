@@ -1,7 +1,7 @@
 import pandas as pd
 import argparse
 from sklearn.utils import shuffle
-
+from src.
 def load_data(data_dir):
     # Load feature names
     features = []
@@ -79,8 +79,18 @@ def create_datasets(X_train, y_train, X_test, y_test):
     
     # Create TensorDataset for testing data
     test_dataset = TensorDataset(X_test_tensor, y_test_tensor)
+    if args.iid:
+            # Sample IID user data from Mnist
+            user_groups = cifar_iid(train_dataset, args.num_users)
+    else:
+        if args.unequal:
+                # Chose uneuqal splits for every user
+                raise NotImplementedError()
+        else:
+                # Chose euqal splits for every user
+                user_groups = cifar_noniid(train_dataset, args.num_users)
     
-    return train_dataset, test_dataset
+    return train_dataset, test_dataset,user_groups
 
   
 def save_data(train_df, test_df, output_dir):
@@ -104,5 +114,5 @@ if __name__ == "__main__":
     train_df, test_df = load_data(args.data_dir)
     save_data(train_df, test_df, args.output_dir)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
-    train_dataset, test_dataset = create_datasets(X_train, y_train, X_test, y_test)
+    train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test)
 
