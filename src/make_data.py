@@ -170,8 +170,8 @@ if __name__ == "__main__":
     print(train_dataset[0])
     print(test_dataset[0])
     # print(user_groups[0])
-    trainloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
-    loader = DataLoader(list(zip(X_train,y_train)), shuffle=True, batch_size=16)
+    trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
+    loader = DataLoader(list(zip(X_train,y_train)), shuffle=False, batch_size=16)
     for X_batch, y_batch in loader:
         print(X_batch, y_batch)
         print('------------------------------------')
