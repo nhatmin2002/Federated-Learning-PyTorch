@@ -171,6 +171,11 @@ if __name__ == "__main__":
     print(test_dataset[0])
     # print(user_groups[0])
     trainloader = DataLoader(train_dataset, batch_size=1, shuffle=True)
+    loader = DataLoader(list(zip(X_train,y_train)), shuffle=True, batch_size=16)
+    for X_batch, y_batch in loader:
+        print(X_batch, y_batch)
+        print('------------------------------------')
+        break
     for batch_idx, (data, target) in enumerate(trainloader):
         print(data, target)
         print(f'Batch {batch_idx + 1}:')
