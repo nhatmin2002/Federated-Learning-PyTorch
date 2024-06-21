@@ -108,7 +108,7 @@ def mnist_noniid(dataset, num_users):
                 (dict_users[i], idxs[rand*num_imgs:(rand+1)*num_imgs]), axis=0)
     return dict_users
 
-def create_datasets(X_train, y_train, X_test, y_test,args):
+def get_dataset(X_train, y_train, X_test, y_test,args):
     # Convert X_train to numpy array and then to torch tensor
     X_train_array = X_train.values.astype(np.float32)
     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
@@ -164,7 +164,7 @@ if __name__ == "__main__":
     print(train_df.shape)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
-    train_dataset, test_dataset,user_groups = create_datasets(X_train, y_train, X_test, y_test,args)
+    train_dataset, test_dataset,user_groups = get_dataset(X_train, y_train, X_test, y_test,args)
     print(train_dataset[0])
     print(test_dataset[0])
     print(user_groups[0])
