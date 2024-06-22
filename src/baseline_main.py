@@ -13,7 +13,7 @@ from utils import get_dataset
 from make_data import *
 from options import args_parser
 from update import test_inference
-from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
+from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar,SimpleMLP,SimpleCNN
 
 
 if __name__ == '__main__':
