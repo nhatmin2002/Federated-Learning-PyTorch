@@ -37,7 +37,7 @@ if __name__ == '__main__':
     #     print(f'Using GPU {args.gpu}')
     # else:
     #     print('Using CPU')
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     if device.type == 'cuda':
         # Optional: Set a specific GPU device if desired
