@@ -109,12 +109,14 @@ if __name__ == '__main__':
         epoch_loss.append(loss_avg)
 
     # Plot loss
+    save_dir = './save'
+    os.makedirs(save_dir, exist_ok=True)
     plt.figure()
     plt.plot(range(len(epoch_loss)), epoch_loss)
     plt.xlabel('epochs')
     plt.ylabel('Train loss')
-    plt.savefig('../save/nn_{}_{}_{}.png'.format(args.dataset, args.model,
-                                                 args.epochs))
+    plt.savefig(os.path.join(save_dir, 'nn_{}_{}_{}.png'.format(args.dataset, args.model, args.epochs)))
+
 
     # testing
     test_acc, test_loss = test_inference(args, global_model, test_dataset)
