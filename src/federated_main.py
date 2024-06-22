@@ -9,13 +9,14 @@ import time
 import pickle
 import numpy as np
 from tqdm import tqdm
-
 import torch
 from tensorboardX import SummaryWriter
+from torch.utils.data import TensorDataset, DataLoader
 
 from options import args_parser
+from make_data import *
 from update import LocalUpdate, test_inference
-from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
+from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar,SimpleMLP,SimpleCNN
 from utils import get_dataset, average_weights, exp_details
 
 
@@ -34,8 +35,15 @@ if __name__ == '__main__':
     device = 'cuda' if args.gpu else 'cpu'
 
     # load dataset and user groups
-    train_dataset, test_dataset, user_groups = get_dataset(args)
-
+    train_dataset, test_dataset, user_groups = get_dataset2(args)
+    trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
+    for batch_idx, (data, target) in enumerate(train_loader):
+            print(data, target)
+    
+            print(f'Batch {batch_idx + 1}:')
+            print('Data shape:', data.shape)
+            print('Target shape:', target.shape)
+            break
     # BUILD MODEL
     if args.model == 'cnn':
         # Convolutional neural netork
@@ -45,15 +53,18 @@ if __name__ == '__main__':
             global_model = CNNFashion_Mnist(args=args)
         elif args.dataset == 'cifar':
             global_model = CNNCifar(args=args)
+        elif args.dataset == 'har':
+            global_model = SimpleCNN(1,6)
 
     elif args.model == 'mlp':
-        # Multi-layer preceptron
-        img_size = train_dataset[0][0].shape
-        len_in = 1
-        for x in img_size:
-            len_in *= x
-            global_model = MLP(dim_in=len_in, dim_hidden=64,
-                               dim_out=args.num_classes)
+        # # Multi-layer preceptron
+        # img_size = train_dataset[0][0].shape
+        # len_in = 1
+        # for x in img_size:
+        #     len_in *= x
+        #     global_model = MLP(dim_in=len_in, dim_hidden=64,
+        #                        dim_out=args.num_classes)
+        global_model=SimpleMLP(561,128,6)
     else:
         exit('Error: unrecognized model')
 
