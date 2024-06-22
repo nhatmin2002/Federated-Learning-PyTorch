@@ -39,7 +39,11 @@ if __name__ == '__main__':
         print('Using CPU')
 
     # load dataset and user groups
-    train_dataset, test_dataset, user_groups = get_dataset2(args)
+    train_df, test_df = load_data(args)
+    print(train_df.shape)
+    save_data(train_df, test_df, args)
+    X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
+    train_dataset, test_dataset, user_groups = get_dataset2(X_train,y_train,X_test,y_test,args)
     trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
     for batch_idx, (data, target) in enumerate(trainloader):
             print(data, target)
