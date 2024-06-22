@@ -27,7 +27,22 @@ if __name__ == '__main__':
     print(train_df.shape)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
-    train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
+    
+    X_train_array = X_train.values.astype(np.float32)
+    X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32) 
+     # Convert y_train to numpy array and then to torch tensor
+    y_train_array = y_train.values.astype(np.int64)
+    y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
+
+    X_test_array = X_test.values.astype(np.float32)
+    X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
+    # Convert y_test to numpy array and then to torch tensor
+    y_test_array = y_test.values.astype(np.int64)
+    y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
+
+    train_dataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
+    test_dataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
+    # train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
     # train_dataset, test_dataset, _ = get_dataset(args)
 
     # BUILD MODEL
@@ -39,14 +54,17 @@ if __name__ == '__main__':
             global_model = CNNFashion_Mnist(args=args)
         elif args.dataset == 'cifar':
             global_model = CNNCifar(args=args)
+        elif args.dataset == 'har':
+            global_model =SimpleCNN(1,6)
     elif args.model == 'mlp':
-        # Multi-layer preceptron
-        img_size = train_dataset[0][0].shape
-        len_in = 1
-        for x in img_size:
-            len_in *= x
-            global_model = MLP(dim_in=len_in, dim_hidden=64,
-                               dim_out=args.num_classes)
+        # # Multi-layer preceptron
+        # img_size = train_dataset[0][0].shape
+        # len_in = 1
+        # for x in img_size:
+        #     len_in *= x
+        #     global_model = MLP(dim_in=len_in, dim_hidden=64,
+        #                        dim_out=args.num_classes)
+        global_model=SimpleMLP(561,128,6)
     else:
         exit('Error: unrecognized model')
 
