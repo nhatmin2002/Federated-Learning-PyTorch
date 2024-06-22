@@ -45,14 +45,6 @@ if __name__ == '__main__':
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
     train_dataset, test_dataset, user_groups = get_dataset2(X_train,y_train,X_test,y_test,args)
     print(train_dataset[0])
-    trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
-    for batch_idx, (data, target) in enumerate(trainloader):
-            print(data, target)
-    
-            print(f'Batch {batch_idx + 1}:')
-            print('Data shape:', data.shape)
-            print('Target shape:', target.shape)
-            break
     # BUILD MODEL
     if args.model == 'cnn':
         # Convolutional neural netork
