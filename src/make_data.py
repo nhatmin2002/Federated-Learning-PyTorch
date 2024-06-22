@@ -131,8 +131,7 @@ def get_dataset2(X_train, y_train, X_test, y_test,args):
     test_dataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
 
     if args.iid:
-            # Sample IID user data from Mnist
-            user_groups = mnist_iid(train_dataset, args.num_users)
+        user_groups = mnist_iid(train_dataset, args.num_users)
     else:
         user_groups = mnist_noniid(train_dataset, args.num_users)
     
