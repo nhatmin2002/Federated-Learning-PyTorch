@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import argparse
+from options import args_parser
 from sklearn.utils import shuffle
 import torch
 
@@ -148,27 +148,27 @@ def save_data(train_df, test_df,args):
     train_df.to_csv(f"{args.output_dir}/train.csv", index=False)
     test_df.to_csv(f"{args.output_dir}/test.csv", index=False)
 
-def args_parser2():
-    parser = argparse.ArgumentParser(description="Load and Save UCI HAR Dataset")
-    parser.add_argument("data_dir", type=str, help="Directory containing the UCI HAR Dataset")
-    parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
-    parser.add_argument("num_users", type=int, help="Num of users")
-    parser.add_argument("--iid", action='store_true', help="Whether to use IID (True) or Non-IID (False) data distribution")
-    args = parser.parse_args()
+# def args_parser2():
+#     parser = argparse.ArgumentParser(description="Load and Save UCI HAR Dataset")
+#     parser.add_argument("data_dir", type=str, help="Directory containing the UCI HAR Dataset")
+#     parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
+#     parser.add_argument("num_users", type=int, help="Num of users")
+#     parser.add_argument("--iid", action='store_true', help="Whether to use IID (True) or Non-IID (False) data distribution")
+#     args = parser.parse_args()
 
-    return args
+#     return args
 
 if __name__ == "__main__":
-    args = args_parser2()
+    args = args_parser()
     train_df, test_df = load_data(args)
     print(train_df.shape)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
     train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
-    print(f"Số lượng mẫu trong train_dataset: {len(train_dataset)}")
-    print(train_dataset[0])
-    print(train_dataset[0])
-    print(test_dataset[0])
+    # print(f"Số lượng mẫu trong train_dataset: {len(train_dataset)}")
+    # print(train_dataset[0])
+    # print(train_dataset[0])
+    # print(test_dataset[0])
     # print(user_groups[0])
     trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
     X_train_array = X_train.values.astype(np.float32)
