@@ -30,9 +30,13 @@ if __name__ == '__main__':
     args = args_parser()
     exp_details(args)
 
-    if args.gpu:
+    device = torch.device('cuda' if args.gpu is not None and torch.cuda.is_available() else 'cpu')
+
+    if device.type == 'cuda':
         torch.cuda.set_device(args.gpu)
-    device = 'cuda' if args.gpu else 'cpu'
+        print(f'Using GPU {args.gpu}')
+    else:
+        print('Using CPU')
 
     # load dataset and user groups
     train_dataset, test_dataset, user_groups = get_dataset2(args)
