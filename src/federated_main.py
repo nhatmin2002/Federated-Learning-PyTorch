@@ -30,11 +30,19 @@ if __name__ == '__main__':
     args = args_parser()
     exp_details(args)
 
-    device = torch.device('cuda' if args.gpu is not None and torch.cuda.is_available() else 'cpu')
+    # device = torch.device('cuda' if args.gpu is not None and torch.cuda.is_available() else 'cpu')
 
+    # if device.type == 'cuda':
+    #     torch.cuda.set_device(args.gpu)
+    #     print(f'Using GPU {args.gpu}')
+    # else:
+    #     print('Using CPU')
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
     if device.type == 'cuda':
-        torch.cuda.set_device(args.gpu)
-        print(f'Using GPU {args.gpu}')
+        # Optional: Set a specific GPU device if desired
+        # torch.cuda.set_device(gpu_id)  # Uncomment this line and specify gpu_id if needed
+        print(f'Using GPU')
     else:
         print('Using CPU')
 
