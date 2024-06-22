@@ -142,9 +142,16 @@ if __name__ == '__main__':
     print("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
 
     # Saving the objects train_loss and train_accuracy:
-    file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
-        format(args.dataset, args.model, args.epochs, args.frac, args.iid,
-               args.local_ep, args.local_bs)
+    save_dir = '../save/objects'
+    os.makedirs(save_dir, exist_ok=True)
+    
+    # Tạo đường dẫn và tên file
+    file_name = os.path.join(save_dir, '{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.format(
+        args.dataset, args.model, args.epochs, args.frac, args.iid, args.local_ep, args.local_bs))
+
+    # file_name = '../save/objects/{}_{}_{}_C[{}]_iid[{}]_E[{}]_B[{}].pkl'.\
+    #     format(args.dataset, args.model, args.epochs, args.frac, args.iid,
+    #            args.local_ep, args.local_bs)
 
     with open(file_name, 'wb') as f:
         pickle.dump([train_loss, train_accuracy], f)
