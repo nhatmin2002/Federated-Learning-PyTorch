@@ -23,9 +23,9 @@ if __name__ == '__main__':
     device = 'cuda' if args.gpu else 'cpu'
 
     # load datasets
-    train_df, test_df = load_data(args)
+    train_df, test_df = load_data(args.data_dir)
     print(train_df.shape)
-    save_data(train_df, test_df, args)
+    save_data(train_df, test_df, args.output_dir)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
     
     X_train_array = X_train.values.astype(np.float32)
