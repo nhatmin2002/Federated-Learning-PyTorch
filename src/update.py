@@ -45,7 +45,7 @@ class LocalUpdate(object):
 
         trainloader = DataLoader(DatasetSplit(dataset, idxs_train),
                                  batch_size=self.args.local_bs, shuffle=True)
-        for batch_idx, (data, target) in enumerate(train_loader):
+        for batch_idx, (data, target) in enumerate(trainloader):
             print(data, target)
             break
         validloader = DataLoader(DatasetSplit(dataset, idxs_val),
