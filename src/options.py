@@ -60,7 +60,7 @@ def args_parser():
                         help='rounds of early stopping')
     parser.add_argument('--verbose', type=int, default=1, help='verbose')
     parser.add_argument('--seed', type=int, default=1, help='random seed')
-    parser.add_argument("data_dir", type=str, help="Directory containing the UCI HAR Dataset")
-    parser.add_argument("output_dir", type=str, help="Directory to save the processed CSV files")
+    parser.add_argument("--data_dir", type=str, help="Directory containing the UCI HAR Dataset")
+    parser.add_argument("--output_dir", type=str, help="Directory to save the processed CSV files")
     args = parser.parse_args()
     return args
