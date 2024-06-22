@@ -37,7 +37,7 @@ if __name__ == '__main__':
     # load dataset and user groups
     train_dataset, test_dataset, user_groups = get_dataset2(args)
     trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
-    for batch_idx, (data, target) in enumerate(train_loader):
+    for batch_idx, (data, target) in enumerate(trainloader):
             print(data, target)
     
             print(f'Batch {batch_idx + 1}:')
