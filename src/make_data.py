@@ -158,34 +158,34 @@ def save_data(train_df, test_df,args):
 
 #     return args
 
-if __name__ == "__main__":
-    args = args_parser()
-    train_df, test_df = load_data(args)
-    print(train_df.shape)
-    save_data(train_df, test_df, args)
-    X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
-    train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
-    # print(f"Số lượng mẫu trong train_dataset: {len(train_dataset)}")
-    # print(train_dataset[0])
-    # print(train_dataset[0])
-    # print(test_dataset[0])
-    # print(user_groups[0])
-    trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
-    X_train_array = X_train.values.astype(np.float32)
-    X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32) 
-    # Convert y_train to numpy array and then to torch tensor
-    y_train_array = y_train.values.astype(np.int64)
-    y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
-    loader = DataLoader(list(zip(X_train_tensor,y_train_tensor)), shuffle=False, batch_size=16)
-    for X_batch, y_batch in loader:
-        print(X_batch, y_batch)
-        print('------------------------------------')
-        break
-    for batch_idx, (data, target) in enumerate(trainloader):
-        print(data, target)
-        print(f'Batch {batch_idx + 1}:')
-        print('Data shape:', data.shape)
-        print('Target shape:', target.shape)
-        break
+# if __name__ == "__main__":
+#     args = args_parser()
+#     train_df, test_df = load_data(args)
+#     print(train_df.shape)
+#     save_data(train_df, test_df, args)
+#     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
+#     train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
+#     # print(f"Số lượng mẫu trong train_dataset: {len(train_dataset)}")
+#     # print(train_dataset[0])
+#     # print(train_dataset[0])
+#     # print(test_dataset[0])
+#     # print(user_groups[0])
+#     trainloader = DataLoader(train_dataset, batch_size=16, shuffle=False)
+#     X_train_array = X_train.values.astype(np.float32)
+#     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32) 
+#     # Convert y_train to numpy array and then to torch tensor
+#     y_train_array = y_train.values.astype(np.int64)
+#     y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
+#     loader = DataLoader(list(zip(X_train_tensor,y_train_tensor)), shuffle=False, batch_size=16)
+#     for X_batch, y_batch in loader:
+#         print(X_batch, y_batch)
+#         print('------------------------------------')
+#         break
+#     for batch_idx, (data, target) in enumerate(trainloader):
+#         print(data, target)
+#         print(f'Batch {batch_idx + 1}:')
+#         print('Data shape:', data.shape)
+#         print('Target shape:', target.shape)
+#         break
 
 
