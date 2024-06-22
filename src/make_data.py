@@ -5,7 +5,7 @@ import torch
 
 from torch.utils.data import TensorDataset, DataLoader
 
-def load_data(data_dir):
+def load_data(args):
     # Load feature names
     features = []
     with open(f"{args.data_dir}/UCI HAR Dataset/features.txt") as file:
