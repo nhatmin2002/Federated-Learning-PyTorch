@@ -36,7 +36,7 @@ class SimpleMLP(nn.Module):
         x = self.relu(x)
         x = self.dropout(x)
         x = self.layer_hidden(x)
-        return torch.log_softmax(x, dim=1)
+        return F.log_softmax(x, dim=1)
         
 class MLP(nn.Module):
     def __init__(self, dim_in, dim_hidden, dim_out):
