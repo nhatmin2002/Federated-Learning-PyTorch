@@ -108,27 +108,19 @@ def mnist_noniid(dataset, num_users):
     return dict_users
 
 def get_dataset2(X_train, y_train, X_test, y_test,args):
-    # Convert X_train to numpy array and then to torch tensor
     X_train_array = X_train.values.astype(np.float32)
     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
-    
-    # Convert y_train to numpy array and then to torch tensor
     y_train_array = y_train.values.astype(np.int64)
     y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
     
-    # Create TensorDataset for training data
-    train_dataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
-
-    # Convert X_test to numpy array and then to torch tensor
     X_test_array = X_test.values.astype(np.float32)
     X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
-    
-    # Convert y_test to numpy array and then to torch tensor
     y_test_array = y_test.values.astype(np.int64)
     y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
     
-    # Create TensorDataset for testing data
-    test_dataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
+    
+    traindataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
+    testdataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
 
     if args.iid:
         user_groups = mnist_iid(train_dataset, args.num_users)
