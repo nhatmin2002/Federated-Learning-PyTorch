@@ -14,7 +14,7 @@ from tensorboardX import SummaryWriter
 from torch.utils.data import TensorDataset, DataLoader
 
 from options import args_parser
-from make_data import get_dataset2
+from make_data import get_dataset2,load_data,preprocess_data
 from update import LocalUpdate, test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar,SimpleMLP,SimpleCNN
 from utils import average_weights, exp_details
