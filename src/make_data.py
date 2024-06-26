@@ -119,8 +119,8 @@ def get_dataset2(X_train, y_train, X_test, y_test,args):
     y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
     
     
-    traindataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
-    testdataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
+    train_dataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
+    test_dataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
 
     if args.iid:
         user_groups = mnist_iid(train_dataset, args.num_users)
