@@ -52,8 +52,8 @@ if __name__ == '__main__':
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
     train_dataset, test_dataset, user_groups = get_dataset2(X_train,y_train,X_test,y_test,args)
-    print(train_dataset[0])
-    print('fs',user_groups)
+    print(len(train_dataset))
+    print(len(user_groups))
     # BUILD MODEL
     if args.model == 'cnn':
         # Convolutional neural netork
