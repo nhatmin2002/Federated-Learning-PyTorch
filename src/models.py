@@ -10,6 +10,7 @@ class SimpleCNN(nn.Module):
         super(SimpleCNN, self).__init__()
         self.conv1 = nn.Conv1d(in_channels=input_size, out_channels=16, kernel_size=5)
         self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=5)
+        self.conv2_drop= self.dropout = nn.Dropout()
         self.fc1 = nn.Linear(32 * 137, 128)  # 137 là chiều dài của đầu ra sau khi max pooling
         self.fc2 = nn.Linear(128, num_classes)
 
@@ -18,6 +19,7 @@ class SimpleCNN(nn.Module):
         x = F.relu(F.max_pool1d(self.conv2(x), 2))  # Convolutional layer 2
         x = x.view(-1, 32 * 137)  # Flatten the output for fully connected layer
         x = F.relu(self.fc1(x))   # Fully connected layer 1
+        x = F.dropout(x, training=self.training)
         x = self.fc2(x)           # Fully connected layer 2 (output layer)
         return F.log_softmax(x, dim=1)  
 
