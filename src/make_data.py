@@ -7,46 +7,50 @@ from sklearn.preprocessing import MinMaxScaler,StandardScaler
 
 from torch.utils.data import TensorDataset, DataLoader
 
+# def load_data(args):
+#     # Load feature names
+#     features = []
+#     with open(f"{args.data_dir}/UCI HAR Dataset/features.txt") as file:
+#         for line in file:
+#             features.append(line.split()[1])
+    
+#     # Renaming duplicate column names
+#     names = []
+#     count = {}
+#     for feature in features:
+#         if features.count(feature) > 1:
+#             names.append(feature)
+#     for name in names:
+#         count[name] = features.count(name)
+
+#     for i in range(len(features)):
+#         if features[i] in names:
+#             num = count[features[i]]
+#             count[features[i]] -= 1
+#             features[i] = str(features[i] + str(num))
+
+#     # Load train data
+#     train_df = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/X_train.txt", delim_whitespace=True, names=features)
+#     train_df['subject_id'] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/subject_train.txt", header=None).squeeze()
+#     train_df["activity"] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
+#     activity = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
+#     label_name = activity.map({1: "WALKING", 2:"WALKING_UPSTAIRS", 3:"WALKING_DOWNSTAIRS", 4:"SITTING", 5:"STANDING", 6:"LYING"})
+#     train_df["activity_name"] = label_name
+    
+#     # Load test data
+#     test_df = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/X_test.txt", delim_whitespace=True, names=features)
+#     test_df['subject_id'] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/subject_test.txt", header=None).squeeze()
+#     test_df["activity"] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
+#     activity_test = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
+#     label_name_test = activity_test.map({1: "WALKING", 2:"WALKING_UPSTAIRS", 3:"WALKING_DOWNSTAIRS", 4:"SITTING", 5:"STANDING", 6:"LYING"})
+#     test_df["activity_name"] = label_name_test
+
+#     return train_df, test_df
+
 def load_data(args):
-    # Load feature names
-    features = []
-    with open(f"{args.data_dir}/UCI HAR Dataset/features.txt") as file:
-        for line in file:
-            features.append(line.split()[1])
-    
-    # Renaming duplicate column names
-    names = []
-    count = {}
-    for feature in features:
-        if features.count(feature) > 1:
-            names.append(feature)
-    for name in names:
-        count[name] = features.count(name)
-
-    for i in range(len(features)):
-        if features[i] in names:
-            num = count[features[i]]
-            count[features[i]] -= 1
-            features[i] = str(features[i] + str(num))
-
-    # Load train data
-    train_df = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/X_train.txt", delim_whitespace=True, names=features)
-    train_df['subject_id'] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/subject_train.txt", header=None).squeeze()
-    train_df["activity"] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
-    activity = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/train/y_train.txt", header=None).squeeze()
-    label_name = activity.map({1: "WALKING", 2:"WALKING_UPSTAIRS", 3:"WALKING_DOWNSTAIRS", 4:"SITTING", 5:"STANDING", 6:"LYING"})
-    train_df["activity_name"] = label_name
-    
-    # Load test data
-    test_df = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/X_test.txt", delim_whitespace=True, names=features)
-    test_df['subject_id'] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/subject_test.txt", header=None).squeeze()
-    test_df["activity"] = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
-    activity_test = pd.read_csv(f"{args.data_dir}/UCI HAR Dataset/test/y_test.txt", header=None).squeeze()
-    label_name_test = activity_test.map({1: "WALKING", 2:"WALKING_UPSTAIRS", 3:"WALKING_DOWNSTAIRS", 4:"SITTING", 5:"STANDING", 6:"LYING"})
-    test_df["activity_name"] = label_name_test
-
+    train_df = pd.read_csv(args.data_dir)
+    test_df = pd.read_csv(args.data_dir)
     return train_df, test_df
-
 
 def preprocess_data(train_df, test_df):
     # Subtract 1 from 'activity' column in both train and test DataFrames
