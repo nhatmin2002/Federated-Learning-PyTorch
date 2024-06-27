@@ -48,8 +48,8 @@ from torch.utils.data import TensorDataset, DataLoader
 #     return train_df, test_df
 
 def load_data(args):
-    train_df = pd.read_csv(f"{args.data_dir}/train.csv)
-    test_df = pd.read_csv(f"{args.data_dir}/test.csv)
+    train_df = pd.read_csv(f"{args.data_dir}/train.csv")
+    test_df = pd.read_csv(f"{args.data_dir}/test.csv")
     return train_df, test_df
 
 def preprocess_data(train_df, test_df):
