@@ -62,7 +62,7 @@ def preprocess_data(train_df, test_df):
     return X_train, y_train, X_test, y_test
 
 def PREPROCESS(X):
-    scaler = StandardScaler()
+    scaler =  MinMaxScaler()
     scaler.fit(X)
     X = scaler.transform(X)
     return X
