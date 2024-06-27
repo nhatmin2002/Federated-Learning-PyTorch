@@ -61,28 +61,32 @@ def preprocess_data(train_df, test_df):
 
     return X_train, y_train, X_test, y_test
 
-# def PREPROCESS(X):
-#     scaler = StandardScaler()
-#     scaler.fit(X)
-#     X = scaler.transform(X)
-#     return X
+def PREPROCESS(X):
+    scaler = StandardScaler()
+    scaler.fit(X)
+    X = scaler.transform(X)
+    return X
 
 def get_dataset2(X_train, y_train, X_test, y_test,args):
-    # sample_original = X_train.iloc[0]
+    sample_original = X_train.iloc[0]
 
-    # X_train_sc = PREPROCESS(X_train)
-    # X_test_sc = PREPROCESS(X_test)
-    # sample_scaled = X_train_sc[0]
-    # print('1',sample_original)
-    # print('2',sample_scaled)
+    X_train_sc = PREPROCESS(X_train)
+    X_test_sc = PREPROCESS(X_test)
+    sample_scaled = X_train_sc[0]
+    print('1',sample_original)
+    print('2',sample_scaled)
 
 
-    X_train_array = X_train.values.astype(np.float32)
+    # X_train_array = X_train.values.astype(np.float32)
+    X_train_array = X_train_sc.astype(np.float32)
+
     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
     y_train_array = y_train.values.astype(np.int64)
     y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
     
-    X_test_array = X_test.values.astype(np.float32)
+    # X_test_array = X_test.values.astype(np.float32)
+    X_test_array = X_test_sc.astype(np.float32)
+
     X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
     y_test_array = y_test.values.astype(np.int64)
     y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
