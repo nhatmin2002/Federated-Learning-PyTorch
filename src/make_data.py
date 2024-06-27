@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.utils import shuffle
 import torch
 from sampling import mnist_iid,mnist_noniid
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler,StandardScaler
 
 from torch.utils.data import TensorDataset, DataLoader
 
@@ -62,7 +62,7 @@ def preprocess_data(train_df, test_df):
     return X_train, y_train, X_test, y_test
 
 def PREPROCESS(X):
-    scaler = MinMaxScaler()
+    scaler = StandardScaler()
     scaler.fit(X)
     X = scaler.transform(X)
     return X
