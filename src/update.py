@@ -39,12 +39,13 @@ class LocalUpdate(object):
         and user indexes.
         """
         # split indexes for train, validation, and test (80, 10, 10)
+        print(len(idxs))
         idxs_train = idxs[:int(0.8*len(idxs))]
         idxs_val = idxs[int(0.8*len(idxs)):int(0.9*len(idxs))]
         idxs_test = idxs[int(0.9*len(idxs)):]
-        # print(len(idxs_train))
-        # print(len(idxs_val))
-        # print(len(idxs_test))
+        print(len(idxs_train))
+        print(len(idxs_val))
+        print(len(idxs_test))
 
 
         trainloader = DataLoader(DatasetSplit(dataset, idxs_train),
