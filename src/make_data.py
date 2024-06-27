@@ -68,7 +68,7 @@ def PREPROCESS(X):
     return X
 
 def get_dataset2(X_train, y_train, X_test, y_test,args):
-    sample_original = X_train[0]
+    sample_original = X_train.iloc[0]
 
     X_train_sc = PREPROCESS(X_train)
     X_test_sc = PREPROCESS(X_test)
