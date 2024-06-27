@@ -61,25 +61,24 @@ def preprocess_data(train_df, test_df):
 
     return X_train, y_train, X_test, y_test
 
-def PREPROCESS(X , y):
+def PREPROCESS(X):
     scaler = MinMaxScaler()
     scaler.fit(X)
     X = scaler.transform(X)
-    y = np.array(y)
-    return X,y
+    return X
 
 def get_dataset2(X_train, y_train, X_test, y_test,args):
-    X_train_sc, y_train_sc = PREPROCESS(X_train,y_train)
-    X_test_sc, y_test_sc = PREPROCESS(X_test,y_test);
+    X_train_sc = PREPROCESS(X_train)
+    X_test_sc = PREPROCESS(X_test);
 
-    X_train_array = X_train_sc.values.astype(np.float32)
+    X_train_array = X_train_sc.astype(np.float32)
     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
-    y_train_array = y_train_sc.values.astype(np.int64)
+    y_train_array = y_train.values.astype(np.int64)
     y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
     
-    X_test_array = X_test_sc.values.astype(np.float32)
+    X_test_array = X_test_sc.astype(np.float32)
     X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
-    y_test_array = y_test_sc.values.astype(np.int64)
+    y_test_array = y_test.values.astype(np.int64)
     y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
     
     
