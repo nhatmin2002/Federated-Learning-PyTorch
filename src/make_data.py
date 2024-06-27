@@ -74,7 +74,7 @@ def get_dataset2(X_train, y_train, X_test, y_test,args):
     X_test_sc = PREPROCESS(X_test)
     sample_scaled = X_train_sc[0]
     print('1',sample_original)
-    print('2',sample_original)
+    print('2',sample_scaled)
 
 
     X_train_array = X_train_sc.astype(np.float32)
