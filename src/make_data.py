@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.utils import shuffle
 import torch
 from sampling import mnist_iid,mnist_noniid
+from sklearn.preprocessing import MinMaxScaler
 
 from torch.utils.data import TensorDataset, DataLoader
 
