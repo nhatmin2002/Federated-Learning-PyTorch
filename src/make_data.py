@@ -68,8 +68,14 @@ def PREPROCESS(X):
     return X
 
 def get_dataset2(X_train, y_train, X_test, y_test,args):
+    sample_original = X_train[0]
+
     X_train_sc = PREPROCESS(X_train)
-    X_test_sc = PREPROCESS(X_test);
+    X_test_sc = PREPROCESS(X_test)
+    sample_scaled = X_train_sc[0]
+    print('1',sample_original)
+    print('2',sample_original)
+
 
     X_train_array = X_train_sc.astype(np.float32)
     X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32)
