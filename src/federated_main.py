@@ -156,8 +156,16 @@ if __name__ == '__main__':
     #     format(args.dataset, args.model, args.epochs, args.frac, args.iid,
     #            args.local_ep, args.local_bs)
 
+    # with open(file_name, 'wb') as f:
+    #     pickle.dump([train_loss, train_accuracy], f)
     with open(file_name, 'wb') as f:
-        pickle.dump([train_loss, train_accuracy], f)
+        pickle.dump({
+            'train_loss': train_loss,
+            'train_accuracy': train_accuracy,
+            'test_acc': test_acc,
+            'test_loss': test_loss,
+            'global_model_state_dict': global_model.state_dict()
+        }, f)
 
     print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
 
