@@ -37,7 +37,7 @@ class SimpleCNN(nn.Module):
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
 
         # Fully connected layers
-        self.fc1 = nn.Linear(3968, 100)  # 3968 là kích thước của tensor sau khi max pooling
+        self.fc1 = nn.Linear(8832, 100)  # 3968 là kích thước của tensor sau khi max pooling
         self.fc2 = nn.Linear(100, self.n_classes)
 
     def forward(self, x):
@@ -45,7 +45,7 @@ class SimpleCNN(nn.Module):
         x = self.pool(x)           # Max pooling
         x = F.relu(self.conv2(x))  # Convolutional layer 2
         x = self.pool(x)           # Max pooling
-        x = x.view(-1, 3968)       # Flatten the output for fully connected layer
+        x = x.view(-1, 8832)       # Flatten the output for fully connected layer
         x = F.relu(self.fc1(x))    # Fully connected layer 1
         x = self.drop(x)           # Dropout
         x = self.fc2(x)            # Fully connected layer 2 (output layer)
