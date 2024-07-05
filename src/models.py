@@ -82,15 +82,13 @@ class SimpleMLP(nn.Module):
         # Define layers
         self.layer1 = nn.Linear(dim_in, 512)
         self.layer2 = nn.Linear(512, 256)
-        self.layer3 = nn.Linear(256, 256)
-        self.layer4 = nn.Linear(256, 128)
-        self.layer5 = nn.Linear(128, 64)
-        self.layer6 = nn.Linear(64, 64)
+        self.layer3 = nn.Linear(256, 128)  # Added missing layer
+        self.layer4 = nn.Linear(128, 64)
         self.output_layer = nn.Linear(64, dim_out)
         
         # Define activations and dropout
         self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(0.1)
+        self.dropout = nn.Dropout(0.5)
 
     def forward(self, x):
         # Flatten the input tensor to (batch_size, dim_in)
@@ -103,9 +101,6 @@ class SimpleMLP(nn.Module):
         x = self.dropout(x)
         x = self.relu(self.layer4(x))
         x = self.dropout(x)
-        x = self.relu(self.layer5(x))
-        x = self.dropout(x)
-        x = self.relu(self.layer6(x))
         x = self.output_layer(x)
         return F.log_softmax(x, dim=1)
 
