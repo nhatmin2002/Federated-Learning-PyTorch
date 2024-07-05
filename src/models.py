@@ -88,7 +88,7 @@ class SimpleMLP(nn.Module):
         
         # Define activations and dropout
         self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(0.5)
+        self.dropout = nn.Dropout(0.6)
 
     def forward(self, x):
         # Flatten the input tensor to (batch_size, dim_in)
