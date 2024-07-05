@@ -76,7 +76,7 @@ if __name__ == '__main__':
         #     len_in *= x
         #     global_model = MLP(dim_in=len_in, dim_hidden=64,
         #                        dim_out=args.num_classes)
-        global_model=SimpleMLP(561,128,6)
+        global_model=SimpleMLP(561,6)
     else:
         exit('Error: unrecognized model')
 
