@@ -84,7 +84,7 @@ class SimpleMLP(nn.Module):
         self.layer2 = nn.Linear(256, 256)
         self.layer3 = nn.Linear(256, 128)  # Added missing layer
         # self.layer4 = nn.Linear(128, 64)
-        self.output_layer = nn.Linear(64, dim_out)
+        self.output_layer = nn.Linear(128, dim_out)
         
         # Define activations and dropout
         self.relu = nn.ReLU()
