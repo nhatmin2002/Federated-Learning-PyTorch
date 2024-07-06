@@ -80,10 +80,10 @@ class SimpleMLP(nn.Module):
         self.dim_out = dim_out
         
         # Define layers
-        self.layer1 = nn.Linear(dim_in, 256)
+        self.layer1 = nn.Linear(dim_in, 512)
         self.layer2 = nn.Linear(256, 256)
         self.layer3 = nn.Linear(256, 128)  # Added missing layer
-        self.layer4 = nn.Linear(128, 64)
+        # self.layer4 = nn.Linear(128, 64)
         self.output_layer = nn.Linear(64, dim_out)
         
         # Define activations and dropout
@@ -99,8 +99,8 @@ class SimpleMLP(nn.Module):
         x = self.dropout(x)
         x = self.relu(self.layer3(x))
         x = self.dropout(x)
-        x = self.relu(self.layer4(x))
-        x = self.dropout(x)
+        # x = self.relu(self.layer4(x))
+        # x = self.dropout(x)
         x = self.output_layer(x)
         return F.log_softmax(x, dim=1)
 
