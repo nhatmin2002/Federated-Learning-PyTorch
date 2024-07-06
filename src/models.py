@@ -81,7 +81,7 @@ class SimpleMLP(nn.Module):
         
         # Define layers
         self.layer1 = nn.Linear(dim_in, 512)
-        self.layer2 = nn.Linear(256, 256)
+        self.layer2 = nn.Linear(512, 256)
         self.layer3 = nn.Linear(256, 128)  # Added missing layer
         # self.layer4 = nn.Linear(128, 64)
         self.output_layer = nn.Linear(128, dim_out)
