@@ -6,50 +6,50 @@ from torch import nn
 import torch.nn.functional as F
 
 
-# class SimpleCNN(nn.Module):
-#     def __init__(self, input_size, num_classes):
-#         super(SimpleCNN, self).__init__()
-#         self.conv1 = nn.Conv1d(in_channels=input_size, out_channels=16, kernel_size=5)
-#         self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=5)
-#         self.conv2_drop= self.dropout = nn.Dropout()
-#         self.fc1 = nn.Linear(32 * 137, 128)  # 137 là chiều dài của đầu ra sau khi max pooling
-#         self.fc2 = nn.Linear(128, num_classes)
-
-#     def forward(self, x):
-#         x = F.relu(F.max_pool1d(self.conv1(x), 2))  # Convolutional layer 1
-#         x = F.relu(F.max_pool1d(self.conv2(x), 2))  # Convolutional layer 2
-#         x = x.view(-1, 32 * 137)  # Flatten the output for fully connected layer
-#         x = F.relu(self.fc1(x))   # Fully connected layer 1
-#         x = F.dropout(x, training=self.training)
-#         x = self.fc2(x)           # Fully connected layer 2 (output layer)
-#         return F.log_softmax(x, dim=1)  
-
 class SimpleCNN(nn.Module):
     def __init__(self, input_size, num_classes):
         super(SimpleCNN, self).__init__()
-        self.n_chan = input_size
-        self.n_classes = num_classes
-
-        # CNN layers
-        self.conv1 = nn.Conv1d(in_channels=self.n_chan, out_channels=64, kernel_size=3, stride=1)
-        self.conv2 = nn.Conv1d(in_channels=64, out_channels=64, kernel_size=3, stride=1)
-        self.drop = nn.Dropout(p=0.6)
-        self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
-
-        # Fully connected layers
-        self.fc1 = nn.Linear(8832, 100)  # 3968 là kích thước của tensor sau khi max pooling
-        self.fc2 = nn.Linear(100, self.n_classes)
+        self.conv1 = nn.Conv1d(in_channels=input_size, out_channels=16, kernel_size=5)
+        self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=5)
+        self.conv2_drop= self.dropout = nn.Dropout()
+        self.fc1 = nn.Linear(32 * 137, 128)  # 137 là chiều dài của đầu ra sau khi max pooling
+        self.fc2 = nn.Linear(128, num_classes)
 
     def forward(self, x):
-        x = F.relu(self.conv1(x))  # Convolutional layer 1
-        x = self.pool(x)           # Max pooling
-        x = F.relu(self.conv2(x))  # Convolutional layer 2
-        x = self.pool(x)           # Max pooling
-        x = x.view(-1, 8832)       # Flatten the output for fully connected layer
-        x = F.relu(self.fc1(x))    # Fully connected layer 1
-        x = self.drop(x)           # Dropout
-        x = self.fc2(x)            # Fully connected layer 2 (output layer)
-        return F.log_softmax(x, dim=1)
+        x = F.relu(F.max_pool1d(self.conv1(x), 2))  # Convolutional layer 1
+        x = F.relu(F.max_pool1d(self.conv2(x), 2))  # Convolutional layer 2
+        x = x.view(-1, 32 * 137)  # Flatten the output for fully connected layer
+        x = F.relu(self.fc1(x))   # Fully connected layer 1
+        x = F.dropout(x, training=self.training)
+        x = self.fc2(x)           # Fully connected layer 2 (output layer)
+        return F.log_softmax(x, dim=1)  
+
+# class SimpleCNN(nn.Module):
+#     def __init__(self, input_size, num_classes):
+#         super(SimpleCNN, self).__init__()
+#         self.n_chan = input_size
+#         self.n_classes = num_classes
+
+#         # CNN layers
+#         self.conv1 = nn.Conv1d(in_channels=self.n_chan, out_channels=64, kernel_size=3, stride=1)
+#         self.conv2 = nn.Conv1d(in_channels=64, out_channels=64, kernel_size=3, stride=1)
+#         self.drop = nn.Dropout(p=0.6)
+#         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
+
+#         # Fully connected layers
+#         self.fc1 = nn.Linear(8832, 100)  # 3968 là kích thước của tensor sau khi max pooling
+#         self.fc2 = nn.Linear(100, self.n_classes)
+
+#     def forward(self, x):
+#         x = F.relu(self.conv1(x))  # Convolutional layer 1
+#         x = self.pool(x)           # Max pooling
+#         x = F.relu(self.conv2(x))  # Convolutional layer 2
+#         x = self.pool(x)           # Max pooling
+#         x = x.view(-1, 8832)       # Flatten the output for fully connected layer
+#         x = F.relu(self.fc1(x))    # Fully connected layer 1
+#         x = self.drop(x)           # Dropout
+#         x = self.fc2(x)            # Fully connected layer 2 (output layer)
+#         return F.log_softmax(x, dim=1)
 
 
 
