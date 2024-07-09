@@ -5,6 +5,7 @@
 import torch
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
+from sklearn.metrics import precision_recall_fscore_support
 
 
 class DatasetSplit(Dataset):
