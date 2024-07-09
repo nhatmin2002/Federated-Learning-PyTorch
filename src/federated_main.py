@@ -18,6 +18,7 @@ from make_data import get_dataset2,load_data,preprocess_data,save_data
 from update import LocalUpdate, test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar,SimpleMLP,SimpleCNN
 from utils import average_weights, exp_details
+from sklearn.metrics import precision_recall_fscore_support
 
 
 if __name__ == '__main__':
