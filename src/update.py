@@ -117,18 +117,48 @@ class LocalUpdate(object):
         return accuracy, loss
 
 
-def test_inference(args, model, test_dataset):
+# def test_inference(args, model, test_dataset):
+#     """ Returns the test accuracy and loss.
+#     """
+
+#     model.eval()
+#     loss, total, correct = 0.0, 0.0, 0.0
+
+#     device = 'cuda' if args.gpu else 'cpu'
+#     criterion = nn.NLLLoss().to(device)
+#     testloader = DataLoader(test_dataset, batch_size=128,
+#                             shuffle=False)
+
+#     for batch_idx, (images, labels) in enumerate(testloader):
+#         images, labels = images.to(device), labels.to(device)
+
+#         # Inference
+#         outputs = model(images)
+#         batch_loss = criterion(outputs, labels)
+#         loss += batch_loss.item()
+
+#         # Prediction
+#         _, pred_labels = torch.max(outputs, 1)
+#         pred_labels = pred_labels.view(-1)
+#         correct += torch.sum(torch.eq(pred_labels, labels)).item()
+#         total += len(labels)
+
+#     accuracy = correct/total
+#     return accuracy, loss
+def test_inference(model, test_dataset):
     """ Returns the test accuracy and loss.
     """
 
     model.eval()
     loss, total, correct = 0.0, 0.0, 0.0
 
-    device = 'cuda' if args.gpu else 'cpu'
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     criterion = nn.NLLLoss().to(device)
     testloader = DataLoader(test_dataset, batch_size=128,
                             shuffle=False)
 
+    all_labels = []
+    all_preds = []
     for batch_idx, (images, labels) in enumerate(testloader):
         images, labels = images.to(device), labels.to(device)
 
@@ -143,5 +173,10 @@ def test_inference(args, model, test_dataset):
         correct += torch.sum(torch.eq(pred_labels, labels)).item()
         total += len(labels)
 
+        all_labels.extend(labels.cpu().numpy())
+        all_preds.extend(pred_labels.cpu().numpy())
+
     accuracy = correct/total
-    return accuracy, loss
+    precision, recall, f1, _ = precision_recall_fscore_support(all_labels, all_preds, average='weighted')
+
+    return accuracy, loss, precision, recall, f1
