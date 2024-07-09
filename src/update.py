@@ -146,7 +146,7 @@ class LocalUpdate(object):
 
 #     accuracy = correct/total
 #     return accuracy, loss
-def test_inference(model, test_dataset):
+def test_inference(args, model, test_dataset):
     """ Returns the test accuracy and loss.
     """
 
