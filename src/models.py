@@ -47,13 +47,14 @@ class SimpleCNN(nn.Module):
 class SimpleMLP(nn.Module):
     def __init__(self, dim_in, dim_hidden, dim_out):
         super(SimpleMLP, self).__init__()
+        self.dim_in = dim_in  # Define dim_in as an instance attribute
         self.layer_input = nn.Linear(dim_in, dim_hidden)
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout()
         self.layer_hidden = nn.Linear(dim_hidden, dim_out)
 
     def forward(self, x):
-        x = x.view(-1, self.dim_in)
+        x = x.view(-1, self.dim_in)  # Access dim_in as an instance attribute
         x = self.layer_input(x)
         x = self.dropout(x)
         x = self.relu(x)
