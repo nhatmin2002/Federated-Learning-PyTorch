@@ -6,24 +6,60 @@ from torch import nn
 import torch.nn.functional as F
 
 
+# class SimpleCNN(nn.Module):
+#     def __init__(self, input_size, num_classes):
+#         super(SimpleCNN, self).__init__()
+#         self.conv1 = nn.Conv1d(in_channels=input_size, out_channels=16, kernel_size=5)
+#         self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=5)
+#         self.conv2_drop= self.dropout = nn.Dropout()
+#         self.fc1 = nn.Linear(4384, 128)  # 137 là chiều dài của đầu ra sau khi max pooling
+#         self.fc2 = nn.Linear(128, num_classes)
+
+#     def forward(self, x):
+#         x = F.relu(F.max_pool1d(self.conv1(x), 2))  # Convolutional layer 1
+#         x = F.relu(F.max_pool1d(self.conv2(x), 2))  # Convolutional layer 2
+#         x = x.view(-1, 4384)  # Flatten the output for fully connected layer
+#         x = F.relu(self.fc1(x))   # Fully connected layer 1
+#         x = F.dropout(x, training=self.training)
+#         x = self.fc2(x)           # Fully connected layer 2 (output layer)
+#         return F.softmax(x, dim=1)  
+
+
 class SimpleCNN(nn.Module):
     def __init__(self, input_size, num_classes):
         super(SimpleCNN, self).__init__()
-        self.conv1 = nn.Conv1d(in_channels=input_size, out_channels=16, kernel_size=5)
-        self.conv2 = nn.Conv1d(in_channels=16, out_channels=32, kernel_size=5)
-        self.conv2_drop= self.dropout = nn.Dropout()
-        self.fc1 = nn.Linear(4384, 128)  # 137 là chiều dài của đầu ra sau khi max pooling
-        self.fc2 = nn.Linear(128, num_classes)
+        self.conv1 = nn.Conv1d(input_size, 10, kernel_size=5)
+        self.conv2 = nn.Conv1d(10, 20, kernel_size=5)
+        self.conv2_drop = nn.Dropout()
+        # Calculate the output size after max pooling
+        self.fc1 = nn.Linear(2740, 50)  
+        self.fc2 = nn.Linear(50, num_classes)
 
     def forward(self, x):
-        x = F.relu(F.max_pool1d(self.conv1(x), 2))  # Convolutional layer 1
-        x = F.relu(F.max_pool1d(self.conv2(x), 2))  # Convolutional layer 2
-        x = x.view(-1, 4384)  # Flatten the output for fully connected layer
-        x = F.relu(self.fc1(x))   # Fully connected layer 1
+        x = F.relu(F.max_pool1d(self.conv1(x), 2))
+        x = F.relu(F.max_pool1d(self.conv2_drop(self.conv2(x)), 2))
+        x = x.view(-1, 2740)  # Adjust 4384 to match your specific output size after pooling
+        x = F.relu(self.fc1(x))
         x = F.dropout(x, training=self.training)
-        x = self.fc2(x)           # Fully connected layer 2 (output layer)
-        return F.log_softmax(x, dim=1)  
+        x = self.fc2(x)
+        return x
 
+class SimpleMLP(nn.Module):
+    def __init__(self, dim_in, dim_hidden, dim_out):
+        super(MLP, self).__init__()
+        self.layer_input = nn.Linear(dim_in, dim_hidden)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout()
+        self.layer_hidden = nn.Linear(dim_hidden, dim_out)
+
+    def forward(self, x):
+        x = x.view(-1, self.dim_in)
+        x = self.layer_input(x)
+        x = self.dropout(x)
+        x = self.relu(x)
+        x = self.layer_hidden(x)
+        return x
+        
 # class SimpleCNN(nn.Module):
 #     def __init__(self, input_size, num_classes):
 #         super(SimpleCNN, self).__init__()
@@ -73,36 +109,36 @@ class SimpleCNN(nn.Module):
 
 
 
-class SimpleMLP(nn.Module):
-    def __init__(self, dim_in, dim_out):
-        super(SimpleMLP, self).__init__()
-        self.dim_in = dim_in
-        self.dim_out = dim_out
+# class SimpleMLP(nn.Module):
+#     def __init__(self, dim_in, dim_out):
+#         super(SimpleMLP, self).__init__()
+#         self.dim_in = dim_in
+#         self.dim_out = dim_out
         
-        # Define layers
-        self.layer1 = nn.Linear(dim_in, 512)
-        self.layer2 = nn.Linear(512, 256)
-        self.layer3 = nn.Linear(256, 128)  # Added missing layer
-        # self.layer4 = nn.Linear(128, 64)
-        self.output_layer = nn.Linear(128, dim_out)
+#         # Define layers
+#         self.layer1 = nn.Linear(dim_in, 512)
+#         self.layer2 = nn.Linear(512, 256)
+#         self.layer3 = nn.Linear(256, 128)  # Added missing layer
+#         # self.layer4 = nn.Linear(128, 64)
+#         self.output_layer = nn.Linear(128, dim_out)
         
-        # Define activations and dropout
-        self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(0.5)
+#         # Define activations and dropout
+#         self.relu = nn.ReLU()
+#         self.dropout = nn.Dropout(0.5)
 
-    def forward(self, x):
-        # Flatten the input tensor to (batch_size, dim_in)
-        x = x.view(-1, self.dim_in)
-        x = self.relu(self.layer1(x))
-        x = self.dropout(x)
-        x = self.relu(self.layer2(x))
-        x = self.dropout(x)
-        x = self.relu(self.layer3(x))
-        x = self.dropout(x)
-        # x = self.relu(self.layer4(x))
-        # x = self.dropout(x)
-        x = self.output_layer(x)
-        return F.log_softmax(x, dim=1)
+#     def forward(self, x):
+#         # Flatten the input tensor to (batch_size, dim_in)
+#         x = x.view(-1, self.dim_in)
+#         x = self.relu(self.layer1(x))
+#         x = self.dropout(x)
+#         x = self.relu(self.layer2(x))
+#         x = self.dropout(x)
+#         x = self.relu(self.layer3(x))
+#         x = self.dropout(x)
+#         # x = self.relu(self.layer4(x))
+#         # x = self.dropout(x)
+#         x = self.output_layer(x)
+#         return F.log_softmax(x, dim=1)
 
 
 class MLP(nn.Module):
