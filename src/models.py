@@ -32,8 +32,8 @@ class SimpleCNN(nn.Module):
         self.conv2 = nn.Conv1d(10, 20, kernel_size=5)
         self.conv2_drop = nn.Dropout()
         # Calculate the output size after max pooling
-        self.fc1 = nn.Linear(2740, 128)  
-        self.fc2 = nn.Linear(128, num_classes)
+        self.fc1 = nn.Linear(2740, 50)  
+        self.fc2 = nn.Linear(50, num_classes)
 
     def forward(self, x):
         x = F.relu(F.max_pool1d(self.conv1(x), 2))
