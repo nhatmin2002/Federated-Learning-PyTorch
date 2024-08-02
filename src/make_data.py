@@ -72,13 +72,13 @@ def preprocess_data(train_df, test_df):
 #     return X
 
 def get_dataset2(X_train, y_train, X_test, y_test,args):
-    sample_original = X_train.iloc[0]
+    # sample_original = X_train.iloc[0]
 
-    # X_train_sc = PREPROCESS(X_train)
-    # X_test_sc = PREPROCESS(X_test)
-    sample_scaled = X_train_sc[0]
-    print('1',sample_original)
-    print('2',sample_scaled)
+    # # X_train_sc = PREPROCESS(X_train)
+    # # X_test_sc = PREPROCESS(X_test)
+    # sample_scaled = X_train_sc[0]
+    # print('1',sample_original)
+    # print('2',sample_scaled)
 
 
     X_train_array = X_train.values.astype(np.float32)
