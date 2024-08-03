@@ -24,27 +24,32 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Device being used: {device}')
     # load datasets
+    # train_df, test_df = load_data(args)
+    # print(train_df.shape)
+    # save_data(train_df, test_df, args)
+    # X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
+    
+    # X_train_array = X_train.values.astype(np.float32)
+    # X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32) 
+    #  # Convert y_train to numpy array and then to torch tensor
+    # y_train_array = y_train.values.astype(np.int64)
+    # y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
+
+    # X_test_array = X_test.values.astype(np.float32)
+    # X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
+    # # Convert y_test to numpy array and then to torch tensor
+    # y_test_array = y_test.values.astype(np.int64)
+    # y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
+
+    # train_dataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
+    # test_dataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
+    # # train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
+    # # train_dataset, test_dataset, _ = get_dataset(args)
     train_df, test_df = load_data(args)
     print(train_df.shape)
     save_data(train_df, test_df, args)
     X_train,y_train,X_test,y_test=preprocess_data(train_df,test_df)
-    
-    X_train_array = X_train.values.astype(np.float32)
-    X_train_tensor = torch.tensor(X_train_array, dtype=torch.float32) 
-     # Convert y_train to numpy array and then to torch tensor
-    y_train_array = y_train.values.astype(np.int64)
-    y_train_tensor = torch.tensor(y_train_array, dtype=torch.long)
-
-    X_test_array = X_test.values.astype(np.float32)
-    X_test_tensor = torch.tensor(X_test_array, dtype=torch.float32)
-    # Convert y_test to numpy array and then to torch tensor
-    y_test_array = y_test.values.astype(np.int64)
-    y_test_tensor = torch.tensor(y_test_array, dtype=torch.long)
-
-    train_dataset=TensorDataset(X_train_tensor.unsqueeze(1), y_train_tensor)
-    test_dataset=TensorDataset(X_test_tensor.unsqueeze(1), y_test_tensor)
-    # train_dataset, test_dataset,user_groups = get_dataset2(X_train, y_train, X_test, y_test,args)
-    # train_dataset, test_dataset, _ = get_dataset(args)
+    train_dataset, test_dataset, user_groups = get_dataset2(X_train,y_train,X_test,y_test,args)
 
     # BUILD MODEL
     if args.model == 'cnn':
