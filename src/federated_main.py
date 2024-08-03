@@ -162,16 +162,25 @@ if __name__ == '__main__':
 
     # with open(file_name, 'wb') as f:
     #     pickle.dump([train_loss, train_accuracy], f)
+    total_run_time_seconds = time.time() - start_time
+    total_run_time_minutes = total_run_time_seconds / 60
+    total_run_time_hours = total_run_time_seconds / 3600
     with open(file_name, 'wb') as f:
         pickle.dump({
             'train_loss': train_loss,
             'train_accuracy': train_accuracy,
             'test_acc': test_acc,
             'test_loss': test_loss,
-            'global_model_state_dict': global_model.state_dict()
+            'global_model_state_dict': global_model.state_dict(),
+            'total_run_time_seconds': total_run_time_seconds,  # Thời gian huấn luyện bằng giây
+            'total_run_time_minutes': total_run_time_minutes,  # Thời gian huấn luyện bằng phút
+            'total_run_time_hours': total_run_time_hours 
         }, f)
 
     print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
+    print('\n Total Run Time: {0:0.4f} seconds'.format(total_run_time_seconds))
+    print(' Total Run Time: {0:0.4f} minutes'.format(total_run_time_minutes))
+    print(' Total Run Time: {0:0.4f} hours'.format(total_run_time_hours))
 
     # PLOTTING (optional)
     import matplotlib
