@@ -22,7 +22,7 @@ from sklearn.metrics import precision_recall_fscore_support
 
 
 if __name__ == '__main__':
-    start_time = time.time()
+    # start_time = time.time()
 
     # define paths
     path_project = os.path.abspath('..')
@@ -84,6 +84,8 @@ if __name__ == '__main__':
     # Set the model to train and send it to device.
     global_model.to(device)
     global_model.train()
+    start_time = time.time()
+
     print(global_model)
 
     # copy weights
