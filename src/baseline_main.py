@@ -109,6 +109,9 @@ if __name__ == '__main__':
         print('\nTrain loss:', loss_avg)
         epoch_loss.append(loss_avg)
 
+    total_run_time_seconds = time.time() - start_time
+    total_run_time_minutes = total_run_time_seconds / 60
+    total_run_time_hours = total_run_time_seconds / 3600
     print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
     print('\n Total Run Time: {0:0.4f} seconds'.format(total_run_time_seconds))
     print(' Total Run Time: {0:0.4f} minutes'.format(total_run_time_minutes))
