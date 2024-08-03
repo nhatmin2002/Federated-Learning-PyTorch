@@ -109,6 +109,11 @@ if __name__ == '__main__':
         print('\nTrain loss:', loss_avg)
         epoch_loss.append(loss_avg)
 
+    print('\n Total Run Time: {0:0.4f}'.format(time.time()-start_time))
+    print('\n Total Run Time: {0:0.4f} seconds'.format(total_run_time_seconds))
+    print(' Total Run Time: {0:0.4f} minutes'.format(total_run_time_minutes))
+    print(' Total Run Time: {0:0.4f} hours'.format(total_run_time_hours))
+
     # Plot loss
     save_dir = './save'
     os.makedirs(save_dir, exist_ok=True)
