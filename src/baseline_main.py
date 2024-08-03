@@ -134,6 +134,11 @@ if __name__ == '__main__':
 
 
     # testing
-    test_acc, test_loss = test_inference(args, global_model, test_dataset)
-    print('Test on', len(test_dataset), 'samples')
-    print("Test Accuracy: {:.2f}%".format(100*test_acc))
+    test_acc, test_loss,precision, recall, f1  = test_inference(args, global_model, test_dataset)
+
+    print(f' \n Results after {args.epochs} global rounds of training:')
+    print("|---- Avg Train Accuracy: {:.2f}%".format(100*train_accuracy[-1]))
+    print("|---- Test Accuracy: {:.2f}%".format(100*test_acc))
+    print("|---- Test Precision: {:.2f}%".format(100*precision))
+    print("|---- Test Recall: {:.2f}%".format(100*recall))
+    print("|---- Test F1: {:.2f}%".format(100*f1))
