@@ -22,7 +22,7 @@ if __name__ == '__main__':
     #     torch.cuda.set_device(args.gpu)
     # device = 'cuda' if args.gpu else 'cpu'
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+    print(f'Device being used: {device}')
     # load datasets
     train_df, test_df = load_data(args)
     print(train_df.shape)
