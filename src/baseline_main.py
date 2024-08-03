@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import os
 import torch
 from torch.utils.data import DataLoader
-
+import time
 from utils import get_dataset
 from make_data import *
 from options import args_parser
@@ -71,6 +71,7 @@ if __name__ == '__main__':
     # Set the model to train and send it to device.
     global_model.to(device)
     global_model.train()
+    
     print(global_model)
 
     # Training
